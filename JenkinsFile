@@ -4,6 +4,11 @@ pipeline{
        maven 'mymaven'
        jdk 'JDK11'
    }
+    environment {
+      AWS_REGION = 'us-east-2'
+      AWS_DEFAULT_REGION = 'us-east-2'
+
+  }
   stages {
     stage('Build'){
        steps {
@@ -80,6 +85,15 @@ pipeline{
  
 )
      }}
+     stage('upload to s3')
+     {
+         steps{
+             withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '48ef093d-f474-480b-8514-4c51231f0f60', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+            s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true,file:'TeamManagement-0.0.1-SNAPSHOT-${BUILD_NUMBER}.jar', bucket:'cloud-945742669624-bucket', path:'var/jenkins_home/workspace/artifactory-pipeline/target/TeamManagement-0.0.1-SNAPSHOT-${BUILD_NUMBER}.jar')
+
+}
+         }
+     }
 
      stage("deploy to ec2"){
        steps{
