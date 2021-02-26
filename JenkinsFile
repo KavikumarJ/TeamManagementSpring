@@ -17,6 +17,30 @@ pipeline{
         sh 'mvn test'
       }
       }
+      stage('sonar-analysis')
+      {
+        steps {
+                withSonarQubeEnv('mysonar') {
+                 
+                        sh 'mvn sonar:sonar'
+                    
+                }
+            }
+      }
+      stage('SonarQube Quality Gate') { 
+            steps{
+              sleep(60)
+                timeout(time: 1, unit: 'HOURS') { 
+                    script{
+                        def qg = waitForQualityGate() 
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                         }
+                    }
+                    
+                }
+            }
+        }
      stage('collect artifact'){
      steps{
      archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
@@ -36,9 +60,7 @@ pipeline{
             }
          ]
     }''',
- 
-    buildName: 'holyFrog',
-    buildNumber: '42'
+
 )
      }}
      stage('download from artifactory')
@@ -70,5 +92,15 @@ pipeline{
       
   
   }
+  post {
+      
+        failure {
+            echo 'I failed :('
+              mail to: 'kunagg25@gmail.com',
+             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+             body: "Something is wrong with ${env.BUILD_URL}"
+        }
+        
+    }
   }
 
