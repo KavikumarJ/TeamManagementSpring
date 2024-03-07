@@ -1,7 +1,7 @@
 pipeline{
   agent any
   tools{
-       maven 'mymaven'
+       maven 'M3'
        jdk 'JDK11'
    }
     environment {
@@ -22,7 +22,7 @@ pipeline{
         sh 'mvn test'
       }
       }
-      stage('sonar-analysis')
+    */  stage('sonar-analysis')
       {
         steps {
                 withSonarQubeEnv('mysonar') {
@@ -45,7 +45,7 @@ pipeline{
                     
                 }
             }
-        }
+        } */
      stage('collect artifact'){
      steps{
      archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
@@ -56,7 +56,7 @@ pipeline{
      steps{
      
      rtUpload (
-    serverId: 'artifactory-server',
+    serverId: 'Artifactory-server',
     spec: '''{
           "files": [
             {
@@ -110,7 +110,7 @@ pipeline{
       
         failure {
             echo 'I failed :('
-              mail to: 'kunagg25@gmail.com',
+              mail to: 'kousigowthaman99@gmail.com,
              subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
              body: "Something is wrong with ${env.BUILD_URL}"
         }
