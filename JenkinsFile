@@ -1,9 +1,10 @@
 pipeline{
-  agent any
-  tools{
-       maven 'M3'
-       jdk 'JDK11'
-   }
+   agent {
+    docker {
+      image 'maven:3.6.3-jdk-11'
+      args '-v /root/.m2:/root/.m2'
+    }
+  }
     environment {
       AWS_REGION = 'us-east-2'
       AWS_DEFAULT_REGION = 'us-east-2'
@@ -22,7 +23,7 @@ pipeline{
         sh 'mvn test'
       }
       }
-    */  stage('sonar-analysis')
+    /*  stage('sonar-analysis')
       {
         steps {
                 withSonarQubeEnv('mysonar') {
