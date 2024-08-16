@@ -23,17 +23,17 @@ pipeline{
         sh 'mvn test'
       }
       }
-    /*  stage('sonar-analysis')
+   stage('sonar-analysis')
       {
         steps {
-                withSonarQubeEnv('mysonar') {
+                withSonarQubeEnv('sonar-Team') {
                  
                         sh 'mvn sonar:sonar'
                     
                 }
             }
       }
-      stage('SonarQube Quality Gate') { 
+     /* stage('SonarQube Quality Gate') { 
             steps{
               sleep(60)
                 timeout(time: 1, unit: 'HOURS') { 
