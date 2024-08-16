@@ -11,9 +11,9 @@
 	</parent>
 	<properties>
   <sonar.projectKey>zeddboy_TeamManagementSpring</sonar.projectKey>
-  <sonar.organization>mindtreeorchard</sonar.organization>
+  <sonar.organization>kavikumarj</sonar.organization>
   <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-
+</properties>
   <build.number></build.number>
 </properties>
 	<dependencies>
