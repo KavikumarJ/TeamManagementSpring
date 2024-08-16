@@ -14,8 +14,6 @@
   <sonar.organization>kavikumarj</sonar.organization>
   <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 </properties>
-  <build.number></build.number>
-</properties>
 	<dependencies>
 
 		<dependency>
